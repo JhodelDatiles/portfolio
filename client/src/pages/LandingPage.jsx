@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import HeroSection from "../components/HeroSection";
+import MovingCarousel from "../components/MovingCarousel";
+import ExperienceTimeline from "../components/ExperienceTimeline";
 
 function LandingPage() {
   const [activeSection, setActiveSection] = useState("home");
 
-  // Scroll Spy Logic
   useEffect(() => {
     const sectionIds = ["home", "stack", "experience", "projects", "contact"];
-
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -17,7 +17,7 @@ function LandingPage() {
           }
         });
       },
-      { threshold: 0.6 }, // Update active state when 60% of section is visible
+      { rootMargin: "-20% 0px -70% 0px", threshold: 0 },
     );
 
     sectionIds.forEach((id) => {
@@ -29,67 +29,64 @@ function LandingPage() {
   }, []);
 
   return (
-    <div className="bg-base-100 text-base-content min-h-screen transition-colors duration-500 selection:bg-primary selection:text-primary-content">
-      {/* Passing both state and setter to Navbar */}
-      <Navbar
-        activeSection={activeSection}
-        setActiveSection={setActiveSection}
-      />
+    <div className="bg-base-100 text-base-content min-h-screen transition-colors duration-500 selection:bg-spider-yellow selection:text-black relative">
+      <Navbar activeSection={activeSection} />
 
-      <main className="max-w-6xl mx-auto px-6">
+      <main className="w-full relative z-10">
         {/* HERO SECTION */}
-        <HeroSection/>
-
-        {/* OTHER SECTIONS */}
-        <section id="stack" className="min-h-screen py-24">
-          <h2 className="text-4xl font-bold mb-10">Stack & Tools</h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {["MongoDB", "Express", "React", "Node.js"].map((tech) => (
-              <div
-                key={tech}
-                className="p-6 bg-base-200 rounded-2xl text-center font-bold border border-base-300"
-              >
-                {tech}
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* EXPERIENCE, PROJECTS... */}
-        <section id="experience" className="min-h-screen py-24">
-          <h2 className="text-4xl font-bold">Work Experience</h2>
-        </section>
-
-        {/* CONTACT FORM */}
         <section
-          id="contact"
-          className="min-h-screen py-24 flex items-center justify-center"
+          id="home"
+          className="min-h-[95vh] flex items-center relative group border-1"
         >
-          <div className="w-full max-w-md bg-base-200 p-8 rounded-3xl border border-base-300 shadow-xl">
-            <h2 className="text-3xl font-bold mb-6 text-center">
-              Let's Connect
-            </h2>
-            <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
-              <input
-                type="text"
-                placeholder="Your Name"
-                className="input input-bordered w-full bg-base-100 focus:outline-primary"
-              />
-              <input
-                type="email"
-                placeholder="Email Address"
-                className="input input-bordered w-full bg-base-100 focus:outline-primary"
-              />
-              <textarea
-                placeholder="Your Message"
-                className="textarea textarea-bordered w-full bg-base-100 h-32 focus:outline-primary"
-              ></textarea>
-              <button className="btn btn-primary w-full shadow-lg">
-                Send Message
-              </button>
-            </form>
+          <div className="max-w-6xl mx-auto px-6 w-full">
+            <HeroSection />
           </div>
+          {/* Chromatic Bottom Fade */}
+          <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-base-100 via-base-100/80 to-transparent z-20" />
         </section>
+
+        {/* TECH STACK SECTION */}
+        <section id="stack" className="w-full min-h-screen flex items-center border-1">
+          <MovingCarousel />
+        </section>
+
+        <section id="experience" className="flex flex-col pt-30 pb-10 overflow-x-hidden border-1 overflow-hidden">
+          <div className="self-center">
+            <h3 className="font-comic-title text-3xl md:text-4xl uppercase tracking-tighter text-white mb-4 px-8 relative inline-block">
+              <span className="relative z-10">Work Experiences</span>
+              <span className="absolute top-0.5 left-[34px] text-[#FF00FF] -z-10 opacity-50 italic">
+                Work Experiences
+              </span>
+              <span className="absolute -top-0.5 left-[30px] text-[#00FFFF] -z-20 opacity-50">
+                Work Experiences
+              </span>
+            </h3>
+          </div>
+
+          <ExperienceTimeline />
+        </section>
+
+        {/* CONTENT SECTIONS */}
+        <div className="max-w-6xl mx-auto px-6 space-y-32 pb-32">
+          <section id="projects" className="min-h-screen pt-24">
+            <h2 className="text-5xl font-comic-title text-glitch-hover uppercase mb-12">
+              Featured Projects
+            </h2>
+            {/* Projects Grid Goes Here */}
+          </section>
+
+          <section
+            id="contact"
+            className="min-h-screen flex items-center justify-center"
+          >
+            <div className="w-full max-w-2xl p-8 border-4 border-black shadow-[8px_8px_0px_black] bg-base-200">
+              <h2 className="text-4xl font-comic-title uppercase mb-6">
+                Send a Transmission
+              </h2>
+              {/* Your Contact Form */}
+            </div>
+          </section>
+        </div>
       </main>
     </div>
   );
