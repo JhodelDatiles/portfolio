@@ -4,6 +4,7 @@ import HeroSection from "../components/HeroSection";
 import MovingCarousel from "../components/MovingCarousel";
 import ExperienceTimeline from "../components/ExperienceTimeline";
 import ProjectCard from "../components/ProjectCard";
+import ContactSection from "../components/ContactSection";
 
 function LandingPage() {
   const [activeSection, setActiveSection] = useState("home");
@@ -122,20 +123,13 @@ function LandingPage() {
           </div>
         </section>
 
-        {/* CONTENT SECTIONS */}
-        <div className="max-w-6xl mx-auto px-6 space-y-32 pb-32">
-          <section
-            id="contact"
-            className="min-h-screen flex items-center justify-center"
-          >
-            <div className="w-full max-w-2xl p-8 border-4 border-black shadow-[8px_8px_0px_black] bg-base-200">
-              <h2 className="text-4xl font-comic-title uppercase mb-6">
-                Send a Transmission
-              </h2>
-              {/* Your Contact Form */}
-            </div>
-          </section>
-        </div>
+        {/* CONTACT SECTION */}
+        <section
+          id="contact"
+          className="min-h-screen flex items-center justify-center"
+        >
+          <ContactSection />
+        </section>
       </main>
     </div>
   );
