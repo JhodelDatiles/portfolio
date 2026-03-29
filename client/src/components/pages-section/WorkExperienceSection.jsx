@@ -46,7 +46,7 @@ const WorkExperienceSection = () => {
   const lineColor = useTransform(smoothProgress, [0, 1], ["#00ffff", "#ff00ff"]); // From Cyan to Magenta
 
   return (
-    <section ref={containerRef} className="flex flex-col relative w-full py-30 overflow-visible">
+    <section ref={containerRef} className="flex flex-col relative w-full overflow-visible">
       <SectionTitle text="Work Experiences" />
 
       <div className="relative w-full max-w-5xl mx-auto px-4">

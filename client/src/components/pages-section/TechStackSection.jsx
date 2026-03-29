@@ -25,7 +25,7 @@ const ComicTag = ({ item, index }) => {
     <motion.div
       style={{ rotate: rotation }}
       whileHover={{ scale: 1.1, rotate: 0, zIndex: 50 }}
-      className={`relative group select-none ${bg} ${text} px-6 py-3 border-2 ${border} 
+      className={`relative group select-none ${bg} ${text} px-6 border-2 ${border} 
         shadow-[4px_4px_0px_rgba(255,0,0,0.8),-2px_-2px_0px_rgba(0,255,255,0.8)]
         transition-all duration-100 cursor-grab active:cursor-grabbing`}
     >
