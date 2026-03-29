@@ -1,85 +1,139 @@
-/* 1. Imports FIRST */
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&family=JetBrains+Mono:wght@400;500&family=Bangers&family=Permanent+Marker&display=swap');
 @import "tailwindcss";
 @plugin "daisyui";
 
 @theme {
+  --breakpoint-xs: 376px;
   --font-comic-title: "Bangers", system-ui;
   --font-comic-hand: "Permanent Marker", cursive;
-  --font-comic-sig: "Autography", cursive;
 
-  /* Animation Definitions */
-  --animate-gradient: gradient-move 6s ease infinite;
-  --animate-fade-in-up: fadeInUp 0.8s ease-out forwards;
-  --animate-scroll: scroll 30s linear infinite;
-  --animate-portal: portal-wobble 4s infinite ease-in-out;
-  --animate-bg-glitch: bg-glitch-flicker 8s infinite step-end;
-
-  /* Custom Spider-Verse Colors */
+  --font-permanent-marker: "Permanent Marker", system-ui;
+  --font-marker-print: "Gloria Hallelujah", cursive;
+  --font-marker-rough: "Reenie Beanie", cursive;
+  /* Spider-Verse color tokens */
   --color-spider-magenta: #ff00ff;
-  --color-spider-cyan: #00ffff;
-  --color-spider-yellow: #ffee00;
+  --color-spider-cyan:    #00ffff;
+  --color-spider-yellow:  #ffee00;
+  --color-spider-red:     #ff3333;
 
-  @keyframes gradient-move {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-  }
+  /* Brick wall tokens */
+  --color-brick-base:    #8b1a0e;
+  --color-brick-dark:    #5c0f07;
+  --color-brick-light:   #b52b18;
+  --color-brick-accent:  #d44030;
+  --color-mortar:        #03071e; 
 
-  @keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  @keyframes scroll {
-    from { transform: translateX(0); }
-    to { transform: translateX(-50%); }
-  }
-
-  @keyframes portal-wobble {
-    0%, 100% { transform: scale(1) rotate(0deg); border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; }
-    33% { transform: scale(1.05) rotate(2deg); border-radius: 70% 30% 50% 50% / 30% 60% 40% 70%; }
-    66% { transform: scale(0.95) rotate(-2deg); border-radius: 30% 70% 70% 30% / 50% 40% 70% 40%; }
-  }
+  --animate-bg-glitch: bg-glitch-flicker 8s infinite step-end;
 
   @keyframes bg-glitch-flicker {
     0%, 100% { opacity: 0.05; }
-    50% { opacity: 0.1; }
-    98% { opacity: 0.05; transform: scaleY(1); }
-    99% { opacity: 0.2; transform: scaleY(2); }
+    50%       { opacity: 0.1; }
+    98%       { opacity: 0.05; transform: scaleY(1); }
+    99%       { opacity: 0.2;  transform: scaleY(2); }
+  }
+
+  @keyframes halftone-shift {
+    0%, 100% { background-position: 0 0; }
+    50%       { background-position: 4px 4px; }
   }
 }
 
-/* 2. Global Styles & Background Patterns */
-html {
-  scroll-behavior: smooth;
+/* Global Resets */
+html { 
+  scroll-behavior: smooth; 
+  scrollbar-width: none; 
 }
-
-body {
-  transition: background-color 0.5s ease, color 0.5s ease;
-}
-
-/* Ben-Day Dots (Halftone Pattern) */
-.bg-spider-dots {
-  background-image: radial-gradient(currentColor 0.8px, transparent 0.8px);
-  background-size: 15px 15px;
-}
-
-/* Graphic Reduction Grid (Sharp Edgy Lines) */
-.bg-comic-grid {
-  background-image: 
-    linear-gradient(135deg, currentColor 0.5px, transparent 0.5px),
-    linear-gradient(45deg, currentColor 0.5px, transparent 0.5px);
-  background-size: 80px 80px;
-}
-
-/* Chromatic Aberration Text Effect */
-.text-glitch-hover:hover {
-  text-shadow: 2px 0 0 #ff00ff, -2px 0 0 #00ffff;
-  transition: text-shadow 0.1s ease;
-}
+::-webkit-scrollbar { display: none; }
 
 @layer utilities {
-  .perspective-1000 { perspective: 1000px; }
-  .preserve-3d { transform-style: preserve-3d; }
+  /* ── 3D & ANIMATION UTILS ── */
+  .backface-hidden {
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+
+  .perspective-1000 {
+    perspective: 1000px;
+  }
+
+  .preserve-3d {
+    transform-style: preserve-3d;
+  }
+
+  /* ── THE SPIDER-BRICK WALL ── */
+.bg-brick-wall {
+    @apply relative overflow-hidden;
+    background-color: #03071e; /* Ensure the fallback is dark */
+    
+    &::before {
+      content: "";
+      @apply absolute inset-0 pointer-events-none;
+      background-image:
+        /* Mortar lines */
+        repeating-linear-gradient(0deg, transparent 0px, transparent 52px, #03071e 52px, #03071e 58px),
+        /* Bricks */
+        repeating-linear-gradient(90deg, 
+          #8b1a0e 0px, #8b1a0e 110px,
+          #03071e 110px, #03071e 116px,
+          #5c0f07 116px, #5c0f07 226px,
+          #03071e 226px, #03071e 232px,
+          #b52b18 232px, #b52b18 342px,
+          #03071e 342px, #03071e 348px,
+          #d44030 348px, #d44030 458px,
+          #03071e 458px, #03071e 464px);
+      background-size: 464px 116px;
+      z-index: -2; /* Force it to the very back */
+    }
+
+    &::after {
+      content: "";
+      @apply absolute inset-0 pointer-events-none;
+      background-image:
+        repeating-linear-gradient(90deg, 
+          #d44030 0px, #d44030 110px,
+          #03071e 110px, #03071e 116px,
+          #8b1a0e 116px, #8b1a0e 226px,
+          #03071e 226px, #03071e 232px,
+          #5c0f07 232px, #5c0f07 342px,
+          #03071e 342px, #03071e 348px,
+          #b52b18 348px, #b52b18 458px,
+          #03071e 458px, #03071e 464px);
+      background-size: 464px 116px;
+      background-position: 232px 58px;
+      mask-image: repeating-linear-gradient(0deg, transparent 0px, transparent 58px, black 58px, black 116px);
+      z-index: -1;
+    }
+  }
+
+  /* Overlays */
+  .brick-overlay-halftone {
+    @apply absolute inset-0 pointer-events-none opacity-15;
+    background-image: radial-gradient(var(--color-spider-magenta) 1px, transparent 1px);
+    background-size: 8px 8px;
+    mix-blend-mode: screen;
+    animation: halftone-shift 6s ease-in-out infinite;
+    z-index: 2;
+  }
+
+  .brick-overlay-grid {
+    @apply absolute inset-0 pointer-events-none;
+    background-image: 
+      linear-gradient(to right, #00ffff0d 1px, transparent 1px),
+      linear-gradient(to bottom, #00ffff0d 1px, transparent 1px);
+    background-size: 80px 80px;
+    z-index: 3;
+  }
+
+  .brick-overlay-glitch {
+    @apply absolute inset-0 pointer-events-none;
+    background: linear-gradient(90deg, rgba(255, 0, 255, 0.04) 0%, transparent 50%, rgba(0, 255, 255, 0.04) 100%);
+    animation: bg-glitch-flicker 8s infinite step-end;
+    z-index: 7;
+  }
+}
+.line-clamp-4 {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;  
+  overflow: hidden;
 }

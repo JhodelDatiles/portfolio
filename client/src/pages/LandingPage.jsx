@@ -1,26 +1,40 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
-import HeroSection from "../components/HeroSection";
-import MovingCarousel from "../components/MovingCarousel";
-import ExperienceTimeline from "../components/ExperienceTimeline";
-import ProjectCard from "../components/ProjectCard";
-import ContactSection from "../components/ContactSection";
+import HeroSection from "../components/pages-section/HeroSection";
+import TechStackSection from "../components/pages-section/TechStackSection";
+import ExperienceTimeline from "../components/pages-section/WorkExperienceSection";
+import ProjectCard from "../components/cards/ProjectCard";
+import ContactSection from "../components/pages-section/ContactSection";
+import MusicPlayer from "../components/MusicPlayer";
+
+// Assets
+import imgEko from "../assets/ekomers-preview.png";
+import imgIpaskil from '../assets/ipaskil-preview.png';
+
+const SECTION_CLASS = "flex flex-col min-h-screen items-center justify-center relative overflow-hidden";
 
 function LandingPage() {
   const [activeSection, setActiveSection] = useState("home");
+  const [isMuted, setIsMuted] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
 
+  // 1. Improved Scroll Observer Logic
   useEffect(() => {
     const sectionIds = ["home", "stack", "experience", "projects", "contact"];
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveSection(entry.target.id);
-          }
-        });
-      },
-      { rootMargin: "-20% 0px -70% 0px", threshold: 0 },
-    );
+    
+    const observerOptions = {
+      // Adjusted margins to trigger more naturally as the section hits the middle
+      rootMargin: "-30% 0px -30% 0px", 
+      threshold: 0.1,
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setActiveSection(entry.target.id);
+        }
+      });
+    }, observerOptions);
 
     sectionIds.forEach((id) => {
       const el = document.getElementById(id);
@@ -30,109 +44,111 @@ function LandingPage() {
     return () => observer.disconnect();
   }, []);
 
+  // 2. Audio "Unlock" Logic
+  // Browser policy requires user interaction before audio plays.
+  useEffect(() => {
+    const unlockAudio = () => {
+      setIsPlaying(true); // Setting this triggers the play() in your MusicPlayer component
+      window.removeEventListener("click", unlockAudio);
+      window.removeEventListener("keydown", unlockAudio);
+    };
+
+    window.addEventListener("click", unlockAudio);
+    window.addEventListener("keydown", unlockAudio);
+    
+    return () => {
+      window.removeEventListener("click", unlockAudio);
+      window.removeEventListener("keydown", unlockAudio);
+    };
+  }, []);
+
   return (
     <div className="bg-base-100 text-base-content min-h-screen transition-colors duration-500 selection:bg-spider-yellow selection:text-black relative">
-      <Navbar activeSection={activeSection} />
+      <Navbar
+        isMuted={isMuted}
+        setIsMuted={setIsMuted}
+        activeSection={activeSection}
+        setActiveSection={setActiveSection}
+      />
 
-      <main className="w-full relative z-10">
-        {/* HERO SECTION */}
-        <section
-          id="home"
-          className="min-h-[95vh] flex items-center relative group"
-        >
-          <div className="max-w-6xl mx-auto px-6 w-full">
-            <HeroSection />
-          </div>
-          {/* Chromatic Bottom Fade */}
-          <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-base-100 via-base-100/80 to-transparent z-20" />
+      {/* Background Overlays - Fixed and Z-indexed */}
+      <div className="fixed inset-0 pointer-events-none z-0">
+        <div className="brick-overlay-halftone opacity-30" />
+        <div className="brick-overlay-grid opacity-20" />
+        <div className="brick-overlay-glitch opacity-10" />
+      </div>
+
+      <main className="relative z-10 w-full flex flex-col">
+        
+        <section id="home" className={`${SECTION_CLASS} scroll-mt-20`}>
+          <HeroSection />
         </section>
 
-        {/* TECH STACK SECTION */}
-        <section id="stack" className="w-full min-h-screen flex items-center">
-          <MovingCarousel />
+        <section id="stack" className={`${SECTION_CLASS} py-20`}>
+          <TechStackSection />
         </section>
 
-        {/* EXPERIENCE SECTION */}
-        <section
-          id="experience"
-          className="flex flex-col pt-30 pb-10 overflow-x-hidden overflow-hidden"
-        >
-          <div className="self-center">
-            <h3 className="font-comic-title text-3xl md:text-4xl uppercase tracking-tighter text-white mb-4 px-8 relative inline-block">
-              <span className="relative z-10">Work Experiences</span>
-              <span className="absolute top-0.5 left-[34px] text-[#FF00FF] -z-10 opacity-50 italic">
-                Work Experiences
-              </span>
-              <span className="absolute -top-0.5 left-[30px] text-[#00FFFF] -z-20 opacity-50">
-                Work Experiences
-              </span>
-            </h3>
-          </div>
-
+        <section id="experience" className={`${SECTION_CLASS}`}>
           <ExperienceTimeline />
         </section>
 
-        {/* PROJECTS SECTION */}
-        <section id="projects" className="flex flex-col border-1 py-30 px-30">
-          <div className="self-center">
-            <h3 className="font-comic-title text-3xl md:text-4xl uppercase tracking-tighter text-white mb-4 px-8 relative inline-block">
-              <span className="relative z-10">Recent Projects</span>
-              <span className="absolute top-0.5 left-[34px] text-[#FF00FF] -z-10 opacity-50 italic">
-                Recent Projects
-              </span>
-              <span className="absolute -top-0.5 left-[30px] text-[#00FFFF] -z-20 opacity-50">
-                Recent Projects
-              </span>
-            </h3>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
-            {/* Project: Espyreal */}
+        <section id="projects" className={`${SECTION_CLASS} py-24 px-6`}>
+          <SectionTitle text="Project Evidence" />
+          <div className="max-w-6xl mx-auto w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 items-stretch">
             <ProjectCard
-              to="/projects/espyreal"
+              to="/projects/ekomers"
               title="EKOMERS"
-              description="A MERN e-commerce web-app with PayMongo payments, admin dashboard, and AI chat support."
-              stack={["React", "Express", "Node.js", "MongoDB"]}
-              offsetColor="bg-spider-yellow"
+              description="A secure MERN-stack e-commerce architecture."
+              stack={["React", "MongoDB", "Node.js"]}
+              image={imgEko}
             />
-
-            <ProjectCard
-              to="/projects/espyreal"
-              title="Espyreal"
-              description="A multi-currency identifier for visually impaired individuals using CNNs and TensorFlow Lite."
-              stack={["React Native", "TensorFlow", "Python", "Mobile Dev"]}
-              offsetColor="bg-spider-yellow"
-            />
-
-            {/* Project: iPaskil */}
             <ProjectCard
               to="/projects/ipaskil"
               title="iPaskil"
-              description="A digital community platform for shared thoughts, poetry, and graffiti-style art."
-              stack={["MERN Stack", "Tailwind CSS", "Framer Motion"]}
-              offsetColor="bg-spider-magenta"
+              description="Digital bulletin board for art sharing."
+              stack={["React", "Express", "Node.js"]}
+              image={imgIpaskil}
             />
-            {/* Project: QA Portfolio */}
             <ProjectCard
-              to="/projects/qa-portfolio"
-              title="NotePad"
-              description="Just a notepad nothing much here."
-              stack={["Playwright", "Manual Testing", "User Flow Analysis"]}
-              offsetColor="bg-spider-cyan"
+              to="/projects/ipaskil"
+              title="Espyreal"
+              description="Currency Identifier for visually impaired."
+              stack={["React Native", "TensorFlow"]}
+              image={imgIpaskil}
             />
           </div>
         </section>
 
-        {/* CONTACT SECTION */}
-        <section
-          id="contact"
-          className="min-h-screen flex items-center justify-center"
-        >
+        <section id="contact" className={`${SECTION_CLASS} px-6 py-20`}>
           <ContactSection />
         </section>
       </main>
+
+      <MusicPlayer
+        isMuted={isMuted}
+        isPlaying={isPlaying}
+        setIsPlaying={setIsPlaying}
+      />
     </div>
   );
 }
+
+export const SectionTitle = ({ text, className = "" }) => (
+  // Use w-full to ensure the container spans the section
+  // Use text-center to align the inline-block h3
+  <div className={`w-full text-center my-10 ${className}`}>
+    <h3 className="font-comic-title text-4xl md:text-5xl uppercase tracking-tighter text-white relative inline-block">
+      <span className="relative z-10">{text}</span>
+      
+      {/* Glitch Layers */}
+      <span className="absolute top-1 left-1 text-spider-magenta -z-10 opacity-70 italic whitespace-nowrap" aria-hidden="true">
+        {text}
+      </span>
+      <span className="absolute -top-1 -left-1 text-spider-cyan -z-20 opacity-70 whitespace-nowrap" aria-hidden="true">
+        {text}
+      </span>
+    </h3>
+  </div>
+);
 
 export default LandingPage;
