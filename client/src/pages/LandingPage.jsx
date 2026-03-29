@@ -5,7 +5,7 @@ import TechStackSection from "../components/pages-section/TechStackSection";
 import ExperienceTimeline from "../components/pages-section/WorkExperienceSection";
 import ProjectCard from "../components/cards/ProjectCard";
 import ContactSection from "../components/pages-section/ContactSection";
-import Footer from "../components/pages-section/footer";
+import Footer from "../components/pages-section/Footer";
 
 // Assets
 import imgEko from "../assets/ekomers-preview.png";
