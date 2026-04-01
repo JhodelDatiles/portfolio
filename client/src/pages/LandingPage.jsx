@@ -2,14 +2,15 @@ import React, { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import HeroSection from "../components/pages-section/HeroSection";
 import TechStackSection from "../components/pages-section/TechStackSection";
-import ExperienceTimeline from "../components/pages-section/WorkExperienceSection";
+import WorkExperienceSection from "../components/pages-section/WorkExperienceSection";
 import ProjectCard from "../components/cards/ProjectCard";
 import ContactSection from "../components/pages-section/ContactSection";
-import Footer from "../components/pages-section/footer";
+import Footer from "../components/pages-section/Footer";
 
 // Assets
 import imgEko from "../assets/ekomers-preview.png";
 import imgIpaskil from "../assets/ipaskil-preview.png";
+import imgNote from "../assets/note-webapp-preview.png"
 
 const SECTION_CLASS="flex flex-col min-h-screen items-center justify-center relative overflow-hidden";
 const SECTION_SPACING_DIVIDER="xs:scroll-mt-0 xs:py-20 py-12 -scroll-mt-5 px-5"
@@ -58,45 +59,56 @@ function LandingPage({ isMuted, setIsMuted, isPlaying, setIsPlaying }) {
       </div>
 
       <main className="relative z-10 w-full flex flex-col">
+        {/* HERO SECTION */}
         <section id="home" className={`${SECTION_CLASS} ${SECTION_SPACING_DIVIDER}`}>
           <HeroSection />
         </section>
-
+        {/* TECH STACK SECTION */}
         <section id="stack" className={`${SECTION_CLASS}`}>
           <TechStackSection />
         </section>
-
+        {/* EXPERIENCE SECTION */}
         <section id="experience" className={`${SECTION_CLASS} ${SECTION_SPACING_DIVIDER}`}>
-          <ExperienceTimeline />
+          <WorkExperienceSection />
         </section>
-
+        {/* PROJECTS SECTION */}
         <section id="projects" className={`${SECTION_CLASS} ${SECTION_SPACING_DIVIDER}`}>
           <SectionTitle text="Project Evidence" />
-          <div className="max-w-6xl mx-auto w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 items-stretch">
+          <div className="max-w-4xl mx-auto w-full grid xs:grid-cols-2 grid-col-1 items-stretch">
             <ProjectCard
               to="/projects/ekomers"
-              title="EKOMERS"
-              description="A MERN-stack e-commerce architecture."
-              stack={["React", "MongoDB", "Node.js"]}
-              image={imgEko}
+              title="note webapp"
+              description="Just a notepad."
+              stack={["React", "MongoDB", "Node.js", "Express.js"]}
+              image={imgNote}
+              issue='01'
             />
             <ProjectCard
               to="/projects/ipaskil"
               title="iPaskil"
               description="Digital bulletin board for art sharing."
-              stack={["React", "Express", "Node.js"]}
+              stack={["React", "MongoDB", "Node.js", "Express.js"]}
               image={imgIpaskil}
+              issue="02"
+            />
+            <ProjectCard
+              to="/projects/espyreal"
+              title="EKOMERS"
+              description="An e-commerce webapp with PayMongo payments, admin dashboard, and AI chat support."
+              stack={["React", "MongoDB", "Node.js", "Express.js"]}
+              image={imgEko}
+              issue="03"
             />
             <ProjectCard
               to="/projects/espyreal"
               title="Espyreal"
-              description="Currency Identifier for visually impaired."
+              description="Mobile app for identifying commonly used currency in the Philippines"
               stack={["React Native", "TensorFlow"]}
-              image={imgIpaskil}
+              issue="04"
             />
           </div>
         </section>
-
+        {/* CONTACT SECTION */}
         <section id="contact" className={`${SECTION_CLASS} ${SECTION_SPACING_DIVIDER}`}>
           <ContactSection />
         </section>

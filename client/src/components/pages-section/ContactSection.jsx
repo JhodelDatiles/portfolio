@@ -109,7 +109,7 @@ const ContactSection = () => {
 
               <div className="relative">
                 <label className="block font-mono text-[10px] font-bold text-spider-cyan uppercase mb-2 tracking-widest">
-                  Return_Frequency
+                  Sender_Frequency
                 </label>
                 <input
                   name="from_email"
