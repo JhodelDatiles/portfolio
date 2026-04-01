@@ -8,7 +8,7 @@ const ProjectCard = ({
   description,
   stack = [],
   image,
-  issue = "01",
+  issue = [],
   stampText = "VIEW PROJECT?",
 }) => {
   const [isHovered, setIsHovered] = useState(false);
@@ -18,7 +18,7 @@ const ProjectCard = ({
       to={to}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className="relative group block w-full max-w-sm mx-auto transition-all duration-500 hover:-rotate-0 -rotate-2 hover:scale-[1.03] z-10 hover:z-20"
+      className="relative group block h-auto w-full max-w-sm mx-auto transition-all duration-500 hover:-rotate-0 -rotate-2 hover:scale-[1.03] z-10 hover:z-20 mb-10"
     >
       {/* Tape decor */}
       <div className="absolute -top-4 left-1/2 -translate-x-1/2 w-24 h-10 bg-white/20 backdrop-blur-md border border-black/5 z-30 rotate-1 group-hover:opacity-0 transition-opacity duration-300" />
@@ -64,11 +64,11 @@ const ProjectCard = ({
         </div>
 
         {/* Caption */}
-        <div className="space-y-2 px-2 relative z-10">
+        <div className="space-y-2 px-2 relative z-10 h-auto">
           <h3 className="font-permanent-marker text-3xl uppercase leading-none text-black/90 group-hover:text-red-700 transition-colors -rotate-1 drop-shadow-sm">
             {title}
           </h3>
-          <p className="font-marker-print text-[13px] leading-tight text-black/80 h-12 overflow-hidden rotate-1 italic">
+          <p className="h-auto font-marker-print text-[13px] leading-tight text-black/80 h-12 overflow-hidden rotate-1 italic">
             {description}
           </p>
           <div className="flex flex-wrap gap-2 border-t border-dashed border-black/20 pt-3 mt-4">

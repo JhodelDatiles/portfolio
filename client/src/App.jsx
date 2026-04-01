@@ -8,25 +8,22 @@ function App() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted]     = useState(false);
 
-  // Autoplay unlock — fires once on first user interaction anywhere
-  useEffect(() => {
-    const unlock = () => {
-      setIsPlaying(true);
-      window.removeEventListener("click",      unlock);
-      window.removeEventListener("touchstart", unlock);
-      window.removeEventListener("keydown",    unlock);
-    };
+useEffect(() => {
+  const events = ["click", "keydown", "touchstart", "pointerdown"];
 
-    window.addEventListener("click",      unlock);
-    window.addEventListener("touchstart", unlock);
-    window.addEventListener("keydown",    unlock);
+  const unlock = () => {
+    setIsPlaying(true);
+    
+    // Remove listeners immediately upon first success
+    events.forEach(event => window.removeEventListener(event, unlock));
+  };
 
-    return () => {
-      window.removeEventListener("click",      unlock);
-      window.removeEventListener("touchstart", unlock);
-      window.removeEventListener("keydown",    unlock);
-    };
-  }, []);
+  events.forEach(event => window.addEventListener(event, unlock));
+
+  return () => {
+    events.forEach(event => window.removeEventListener(event, unlock));
+  };
+}, []);
 
   return (
     <div className="min-h-screen bg-black text-white">

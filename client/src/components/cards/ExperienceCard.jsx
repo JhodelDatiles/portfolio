@@ -2,7 +2,11 @@ import React, { useRef } from "react";
 import { useInView } from "framer-motion";
 import CalculatingText from "../CalculatingText";
 
-const ExperienceCard = ({ title, subtitle, description, highlights = [] }) => {
+const ExperienceCard = ({ 
+  title, 
+  subtitle, 
+  description, 
+  highlights = [] }) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.2 });
 
@@ -43,7 +47,7 @@ const ExperienceCard = ({ title, subtitle, description, highlights = [] }) => {
         <div className="relative mb-6">
           <div className="flex items-baseline gap-2">
             <span className="text-spider-cyan font-black text-xl italic tracking-tighter">/ /</span>
-            <h3 className="font-comic-title text-5xl uppercase text-white leading-none tracking-tighter group-hover:text-spider-magenta transition-colors duration-300">
+            <h3 className="font-comic-title text-2xl xs:text-5xl uppercase text-white leading-none tracking-tighter group-hover:text-spider-magenta transition-colors duration-300">
               {isInView ? (
                 <CalculatingText text={title} delay={300} revealPerTick={1.5} />
               ) : ""}
@@ -52,7 +56,7 @@ const ExperienceCard = ({ title, subtitle, description, highlights = [] }) => {
 
           <div className="mt-2 flex items-center gap-4">
             <div className="h-[2px] flex-1 bg-gradient-to-r from-spider-cyan to-transparent opacity-50" />
-            <p className="font-mono text-[11px] text-spider-cyan uppercase tracking-[0.4em] font-bold">
+            <p className="font-mono text-[8px] xs:text-[11px] text-spider-cyan uppercase tracking-[0.4em] font-bold">
               {isInView ? <CalculatingText text={subtitle} delay={600} /> : ""}
             </p>
           </div>
@@ -60,7 +64,7 @@ const ExperienceCard = ({ title, subtitle, description, highlights = [] }) => {
 
         {/* Description */}
         <div className="mb-8 relative z-10">
-          <p className="font-comic-hand text-lg leading-tight text-white/90 italic border-l-2 border-spider-magenta pl-4 py-1">
+          <p className="font-comic-hand  text-[12px] xs:text-[18px] leading-tight text-white/90 italic border-l-2 border-spider-magenta pl-4 py-1">
             {isInView ? (
               <CalculatingText
                 text={description}
@@ -73,11 +77,11 @@ const ExperienceCard = ({ title, subtitle, description, highlights = [] }) => {
         </div>
 
         {/* Highlight tags */}
-        <div className="flex flex-wrap gap-3">
+        <div className="flex flex-wrap gap-3 invisible">
           {highlights.map((skill, i) => (
             <div
               key={i}
-              className="px-3 py-1 bg-white text-black font-comic-title text-xs uppercase border-2 border-black shadow-[3px_3px_0px_var(--color-spider-magenta)] hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all"
+              className="px-3 py-1 bg-white text-black font-comic-title text-[8px] xs:text-[12px] uppercase border-2 border-black shadow-[3px_3px_0px_var(--color-spider-magenta)] hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all"
             >
               {isInView ? (
                 <CalculatingText text={skill} delay={1300 + i * 100} />
