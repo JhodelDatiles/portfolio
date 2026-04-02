@@ -10,10 +10,12 @@ import Footer from "../components/pages-section/Footer";
 // Assets
 import imgEko from "../assets/ekomers-preview.png";
 import imgIpaskil from "../assets/ipaskil-preview.png";
-import imgNote from "../assets/note-webapp-preview.png"
+import imgNote from "../assets/note-webapp-preview.png";
 
-const SECTION_CLASS="flex flex-col min-h-screen items-center justify-center relative overflow-hidden";
-const SECTION_SPACING_DIVIDER="xs:scroll-mt-0 xs:py-20 py-12 -scroll-mt-5 px-5"
+const SECTION_CLASS =
+  "flex flex-col min-h-screen items-center justify-center relative overflow-hidden";
+const SECTION_SPACING_DIVIDER =
+  "xs:scroll-mt-0 xs:py-20 py-12 -scroll-mt-5 px-5";
 
 // isMuted + setIsMuted come from App — Navbar controls mute, MusicPlayer reacts
 function LandingPage({ isMuted, setIsMuted, isPlaying, setIsPlaying }) {
@@ -29,7 +31,7 @@ function LandingPage({ isMuted, setIsMuted, isPlaying, setIsPlaying }) {
           if (entry.isIntersecting) setActiveSection(entry.target.id);
         });
       },
-      { rootMargin: "-30% 0px -30% 0px", threshold: 0.1 }
+      { rootMargin: "-30% 0px -30% 0px", threshold: 0.1 },
     );
 
     sectionIds.forEach((id) => {
@@ -60,7 +62,10 @@ function LandingPage({ isMuted, setIsMuted, isPlaying, setIsPlaying }) {
 
       <main className="relative z-10 w-full flex flex-col">
         {/* HERO SECTION */}
-        <section id="home" className={`${SECTION_CLASS} ${SECTION_SPACING_DIVIDER}`}>
+        <section
+          id="home"
+          className={`${SECTION_CLASS} ${SECTION_SPACING_DIVIDER}`}
+        >
           <HeroSection />
         </section>
         {/* TECH STACK SECTION */}
@@ -68,34 +73,62 @@ function LandingPage({ isMuted, setIsMuted, isPlaying, setIsPlaying }) {
           <TechStackSection />
         </section>
         {/* EXPERIENCE SECTION */}
-        <section id="experience" className={`${SECTION_CLASS} ${SECTION_SPACING_DIVIDER}`}>
+        <section
+          id="experience"
+          className={`${SECTION_CLASS} ${SECTION_SPACING_DIVIDER}`}
+        >
           <WorkExperienceSection />
         </section>
         {/* PROJECTS SECTION */}
-        <section id="projects" className={`${SECTION_CLASS} ${SECTION_SPACING_DIVIDER}`}>
+        <section
+          id="projects"
+          className={`${SECTION_CLASS} ${SECTION_SPACING_DIVIDER}`}
+        >
           <SectionTitle text="Project Evidence" />
           <div className="max-w-4xl mx-auto w-full grid xs:grid-cols-2 grid-col-1 items-stretch">
             <ProjectCard
-              to="/projects/ekomers"
+              to="/projects/notewebapp"
               title="note webapp"
               description="Just a notepad."
               stack={["React", "MongoDB", "Node.js", "Express.js"]}
               image={imgNote}
-              issue='01'
+              issue="01"
             />
             <ProjectCard
               to="/projects/ipaskil"
               title="iPaskil"
               description="Digital bulletin board for art sharing."
-              stack={["React", "MongoDB", "Node.js", "Express.js"]}
+              stack={[
+                "React",
+                "MongoDB",
+                "Node.js",
+                "Express.js",
+                "Cloudinary",
+                "Axios",
+                "JWT",
+              ]}
               image={imgIpaskil}
               issue="02"
             />
             <ProjectCard
-              to="/projects/espyreal"
+              to="/projects/ekomers"
               title="EKOMERS"
               description="An e-commerce webapp with PayMongo payments, admin dashboard, and AI chat support."
-              stack={["React", "MongoDB", "Node.js", "Express.js"]}
+              stack={[
+                "React",
+                "MongoDB",
+                "Node.js",
+                "Express.js",
+                "PayMongo",
+                "Cloudinary",
+                "Brevo",
+                "Leaflet",
+                "JWT",
+                "Axios",
+                "Recharts",
+                "DaisyUI",
+                "TailwindCSS",
+              ]}
               image={imgEko}
               issue="03"
             />
@@ -109,11 +142,14 @@ function LandingPage({ isMuted, setIsMuted, isPlaying, setIsPlaying }) {
           </div>
         </section>
         {/* CONTACT SECTION */}
-        <section id="contact" className={`${SECTION_CLASS} ${SECTION_SPACING_DIVIDER}`}>
+        <section
+          id="contact"
+          className={`${SECTION_CLASS} ${SECTION_SPACING_DIVIDER}`}
+        >
           <ContactSection />
         </section>
       </main>
-      <Footer/>
+      <Footer />
     </div>
   );
 }
