@@ -1,20 +1,18 @@
-import React, { useRef } from "react";
-import { useInView } from "framer-motion";
+import React from "react";
 import CalculatingText from "../CalculatingText";
 
-const ExperienceCard = ({ 
-  title, 
-  subtitle, 
-  description, 
-  highlights = [] }) => {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, amount: 0.2 });
-
+const ExperienceCard = ({
+  title,
+  subtitle,
+  description,
+  highlights = [],
+  isInView = false, // ← now a prop, not internal state
+}) => {
   return (
-    <div ref={ref} className="relative w-full group transition-all duration-500">
+    <div className="relative w-full group transition-all duration-500">
       {/* Glitch backdrop glow */}
       <div
-        className={`absolute -inset-1 bg-gradient-to-r from-spider-magenta via-spider-cyan to-spider-magenta opacity-20 blur-xl transition-opacity duration-1000 ${
+        className={`absolute -inset-1 bg-gradient-to-r from-spider-magenta via-spider-cyan to-spider-magenta blur-xl transition-opacity duration-1000 ${
           isInView ? "opacity-40 animate-pulse" : "opacity-0"
         }`}
       />
@@ -23,7 +21,11 @@ const ExperienceCard = ({
       <div className="absolute -top-7 left-4 flex items-center">
         <div className="bg-spider-magenta text-white px-4 py-1 skew-x-[-15deg] border-2 border-black shadow-[4px_4px_0px_#000000]">
           <span className="font-comic-title text-[10px] uppercase tracking-widest block skew-x-[15deg]">
-            {isInView ? <CalculatingText text="QA TESTER" delay={100} /> : "LOADING..."}
+            {isInView ? (
+              <CalculatingText text="QA TESTER" delay={100} />
+            ) : (
+              "LOADING..."
+            )}
           </span>
         </div>
       </div>
@@ -46,11 +48,15 @@ const ExperienceCard = ({
         {/* Header */}
         <div className="relative mb-6">
           <div className="flex items-baseline gap-2">
-            <span className="text-spider-cyan font-black text-xl italic tracking-tighter">/ /</span>
+            <span className="text-spider-cyan font-black text-xl italic tracking-tighter">
+              / /
+            </span>
             <h3 className="font-comic-title text-2xl xs:text-5xl uppercase text-white leading-none tracking-tighter group-hover:text-spider-magenta transition-colors duration-300">
               {isInView ? (
                 <CalculatingText text={title} delay={300} revealPerTick={1.5} />
-              ) : ""}
+              ) : (
+                ""
+              )}
             </h3>
           </div>
 
@@ -64,7 +70,7 @@ const ExperienceCard = ({
 
         {/* Description */}
         <div className="mb-8 relative z-10">
-          <p className="font-comic-hand  text-[12px] xs:text-[18px] leading-tight text-white/90 italic border-l-2 border-spider-magenta pl-4 py-1">
+          <p className="font-comic-hand text-[12px] xs:text-[18px] leading-tight text-white/90 italic border-l-2 border-spider-magenta pl-4 py-1">
             {isInView ? (
               <CalculatingText
                 text={description}
@@ -72,7 +78,9 @@ const ExperienceCard = ({
                 speed={10}
                 revealPerTick={1.5}
               />
-            ) : ""}
+            ) : (
+              ""
+            )}
           </p>
         </div>
 
@@ -85,7 +93,9 @@ const ExperienceCard = ({
             >
               {isInView ? (
                 <CalculatingText text={skill} delay={1300 + i * 100} />
-              ) : ""}
+              ) : (
+                ""
+              )}
             </div>
           ))}
         </div>

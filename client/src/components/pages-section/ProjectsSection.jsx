@@ -41,8 +41,13 @@ const StatusBadge = ({ status }) => {
       bg: "bg-spider-yellow/10",
     },
   };
-  const { icon: Icon, label, color, border, bg } =
-    config[status] ?? config.pending;
+  const {
+    icon: Icon,
+    label,
+    color,
+    border,
+    bg,
+  } = config[status] ?? config.pending;
   return (
     <span
       className={`inline-flex items-center gap-1.5 px-2 py-1 border ${border} ${bg} ${color} text-[10px] font-black uppercase tracking-widest`}
@@ -61,11 +66,11 @@ const Lightbox = ({ images, startIndex, reportId, onClose }) => {
 
   const prev = useCallback(
     () => setCurrent((c) => (c - 1 + images.length) % images.length),
-    [images.length]
+    [images.length],
   );
   const next = useCallback(
     () => setCurrent((c) => (c + 1) % images.length),
-    [images.length]
+    [images.length],
   );
 
   useEffect(() => {
@@ -80,7 +85,9 @@ const Lightbox = ({ images, startIndex, reportId, onClose }) => {
 
   useEffect(() => {
     document.body.style.overflow = "hidden";
-    return () => { document.body.style.overflow = ""; };
+    return () => {
+      document.body.style.overflow = "";
+    };
   }, []);
 
   return (
@@ -140,7 +147,9 @@ const Lightbox = ({ images, startIndex, reportId, onClose }) => {
                 strokeWidth={3}
                 className="group-hover:-translate-x-1 transition-transform"
               />
-              <span className="text-[10px] font-black uppercase tracking-widest">Prev</span>
+              <span className="text-[10px] font-black uppercase tracking-widest">
+                Prev
+              </span>
             </button>
 
             {/* Diamond dot indicators */}
@@ -162,7 +171,9 @@ const Lightbox = ({ images, startIndex, reportId, onClose }) => {
               onClick={next}
               className="group flex items-center gap-2 border-2 border-white/20 px-4 py-2 text-white/50 hover:border-spider-cyan hover:text-spider-cyan transition-all active:scale-95"
             >
-              <span className="text-[10px] font-black uppercase tracking-widest">Next</span>
+              <span className="text-[10px] font-black uppercase tracking-widest">
+                Next
+              </span>
               <ChevronRight
                 size={16}
                 strokeWidth={3}
@@ -292,7 +303,6 @@ const ProjectsSection = () => {
         <div className="fixed top-0 right-0 w-1 h-full bg-spider-cyan opacity-60 z-10" />
 
         <div className="relative z-10 max-w-5xl mx-auto px-4 md:px-8 py-8">
-
           {/* ── TOP NAV ── */}
           <nav className="flex justify-between items-center mb-12">
             <button
@@ -328,10 +338,16 @@ const ProjectsSection = () => {
               </p>
               <h1 className="font-comic-title text-5xl md:text-7xl uppercase text-white leading-none tracking-tighter relative">
                 <span className="relative z-10">{project.title}</span>
-                <span className="absolute top-0.5 left-0.5 text-spider-magenta -z-10 opacity-60 italic" aria-hidden="true">
+                <span
+                  className="absolute top-0.5 left-0.5 text-spider-magenta -z-10 opacity-60 italic"
+                  aria-hidden="true"
+                >
                   {project.title}
                 </span>
-                <span className="absolute -top-0.5 -left-0.5 text-spider-cyan -z-20 opacity-50" aria-hidden="true">
+                <span
+                  className="absolute -top-0.5 -left-0.5 text-spider-cyan -z-20 opacity-50"
+                  aria-hidden="true"
+                >
                   {project.title}
                 </span>
               </h1>
@@ -363,7 +379,11 @@ const ProjectsSection = () => {
                 className="group inline-flex items-center gap-3 border-2 border-spider-cyan px-5 py-3 text-spider-cyan hover:bg-spider-cyan hover:text-black transition-all duration-150 active:scale-95 relative"
               >
                 <div className="absolute inset-0 bg-spider-cyan translate-x-1 translate-y-1 -z-10 opacity-20 group-hover:opacity-0 transition-opacity" />
-                <ExternalLink size={14} strokeWidth={3} className="group-hover:rotate-12 transition-transform" />
+                <ExternalLink
+                  size={14}
+                  strokeWidth={3}
+                  className="group-hover:rotate-12 transition-transform"
+                />
                 <span className="text-[11px] font-black uppercase tracking-widest">
                   {project.liveUrl}
                 </span>
@@ -435,16 +455,23 @@ const ProjectsSection = () => {
             <div className="relative">
               <div className="absolute inset-0 bg-spider-red translate-x-3 translate-y-3 -z-10 opacity-20" />
               <div className="border-4 border-white overflow-x-auto">
-
                 {/* Table Header */}
                 <div className="grid grid-cols-[70px_1.2fr_1fr_1fr_90px_160px] bg-white text-black text-[9px] uppercase tracking-widest font-black min-w-[900px]">
-                  {["ID", "Steps to Reproduce", "Expected Result", "Actual Result", "Status", "Visual Proof"].map(
-                    (h, i) => (
-                      <div key={i} className={`p-3 ${i < 5 ? "border-r-2 border-black/20" : ""}`}>
-                        {h}
-                      </div>
-                    )
-                  )}
+                  {[
+                    "ID",
+                    "Steps to Reproduce",
+                    "Expected Result",
+                    "Actual Result",
+                    "Status",
+                    "Visual Proof",
+                  ].map((h, i) => (
+                    <div
+                      key={i}
+                      className={`p-3 ${i < 5 ? "border-r-2 border-black/20" : ""}`}
+                    >
+                      {h}
+                    </div>
+                  ))}
                 </div>
 
                 {/* Table Rows */}
@@ -456,8 +483,8 @@ const ProjectsSection = () => {
                         row.status === "open"
                           ? "border-spider-red/30 bg-spider-red/5"
                           : row.status === "pending"
-                          ? "border-spider-yellow/20 bg-spider-yellow/[0.03]"
-                          : "border-white/10"
+                            ? "border-spider-yellow/20 bg-spider-yellow/[0.03]"
+                            : "border-white/10"
                       }`}
                   >
                     {/* ID */}
@@ -483,8 +510,8 @@ const ProjectsSection = () => {
                         row.status === "open"
                           ? "text-spider-red"
                           : row.status === "pending"
-                          ? "text-spider-yellow/70"
-                          : "text-white/40 line-through"
+                            ? "text-spider-yellow/70"
+                            : "text-white/40 line-through"
                       }`}
                     >
                       {row.actual}
@@ -531,7 +558,6 @@ const ProjectsSection = () => {
               </div>
             </div>
           </footer> */}
-
         </div>
 
         {/* Bottom Color Stripe */}
